@@ -1,0 +1,37 @@
+# General
+*.log
+*.tmp
+*.bak
+*.swp
+*.swo
+*.class
+*.jar
+*.war
+*.ear
+
+# IntelliJ IDEA
+.idea/
+*.iml
+*.iws
+out/
+
+# Maven
+target/
+*.log
+
+# Selenium WebDriver
+*.db
+*.jks
+*.keystore
+*.p12
+images/
+
+# Cucumber
+
+
+# BrowserStack
+*.browserstack
+
+# System files
+.DS_Store
+Thumbs.db
