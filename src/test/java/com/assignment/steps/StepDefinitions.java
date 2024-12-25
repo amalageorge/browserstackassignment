@@ -30,21 +30,7 @@ import java.time.Duration;
 import java.util.List;
 
 public class StepDefinitions extends TestBase{
-
- /*   @Before
-    public void setUp() throws Exception {//String useBrowserStack, String browser, String browserVersion, String os, String osVersion) throws Exception {
-
-        // Fetch parameters from ThreadLocal
-        String useBrowserStack = TestRunner.useBrowserStack.get();
-        String browser = TestRunner.browser.get();
-        String browserVersion = TestRunner.browserVersion.get();
-        String os = TestRunner.os.get();
-        String osVersion = TestRunner.osVersion.get();
-
-        boolean useBS = Boolean.parseBoolean(useBrowserStack);
-        driver = WebDriverFactory.createDriver(Boolean.parseBoolean(useBrowserStack), browser, browserVersion, os, osVersion);
-
-    }*/
+    
  @Before
  public void setUpBrowser() {
      // Initialize WebDriver before each scenario (you can specify the browser here)
@@ -101,7 +87,7 @@ public class StepDefinitions extends TestBase{
     public void cover_images_of_articles_are_downloaded() throws IOException, InterruptedException {
         List<WebElement> articles = driver.findElements(By.tagName("article"));
         for(int i = 0; i < 5; i++){
-            //driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+            driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
             articles.get(i).findElement(By.xpath(".//h2")).click();
 
             WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
@@ -117,7 +103,7 @@ public class StepDefinitions extends TestBase{
                 SaveImage.saveImage(imageUrl, "images/cover_image_" + i + ".jpg");
             }
             driver.navigate().back();
-            Thread.sleep(5000);
+            //Thread.sleep(5000);
         }
     }
     @After

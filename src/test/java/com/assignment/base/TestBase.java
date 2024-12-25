@@ -13,7 +13,6 @@ public class TestBase {
     // Method to initialize WebDriver with the specified browser
     public void setUp(String browser) {
         driver = DriverFactory.createDriver(browser);
-        //driver.manage().window().maximize();
     }
 
 

@@ -13,8 +13,8 @@ public class CookieUtils {
         try {
             // Example: Find and click the "Accept" button for cookies
             WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(15));
-            WebElement acceptButton = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//button[@id='didomi-notice-learn-more-button']")));
-                    //driver.findElement(By.id("didomi-notice-agree-button"));
+            WebElement acceptButton = wait.until(ExpectedConditions.visibilityOfElementLocated
+                    (By.xpath("//button[@id='didomi-notice-agree-button']")));
 
             // If the accept button is displayed and enabled, click it
             if (acceptButton.isDisplayed() && acceptButton.isEnabled()) {
