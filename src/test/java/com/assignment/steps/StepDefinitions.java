@@ -6,7 +6,9 @@ import com.assignment.base.TestBase;
 import com.assignment.base.WebDriverFactory;
 import com.assignment.base.WebDriverManagerWithBrowserStackTest;
 import com.assignment.runner.TestRunner;
+import com.assignment.utility.ConfigReader;
 import com.assignment.utility.CookieUtils;
+import com.assignment.utility.GoogleTranslate;
 import com.assignment.utility.SaveImage;
 import io.cucumber.java.After;
 import io.cucumber.java.Before;
@@ -17,20 +19,19 @@ import org.junit.Assert;
 
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-
-import org.testng.annotations.Parameters;
-
 import java.io.IOException;
 import java.time.Duration;
+import java.util.ArrayList;
 import java.util.List;
 
 public class StepDefinitions extends TestBase{
-    
+
+    List<String[]> titleWords = new ArrayList<>();
+
  @Before
  public void setUpBrowser() {
      // Initialize WebDriver before each scenario (you can specify the browser here)
@@ -65,12 +66,15 @@ public class StepDefinitions extends TestBase{
     @When("First five articles are fetched and their titles and contents are printed")
     public void first_five_articles_are_fetched_and_their_titles_and_contents_are_printed() throws InterruptedException {
         List<WebElement> articles = driver.findElements(By.tagName("article"));
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(45));
         for(int i = 0; i < 5; i++){
 
-            driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+            wait.until(ExpectedConditions.visibilityOfAllElements(articles));
 
             WebElement titleElement = articles.get(i).findElement(By.xpath(".//h2"));
             String title = titleElement.getText();
+            String[] titleString = title.split(" ");
+            titleWords.add(titleString);
 
             WebElement contentElement = articles.get(i).findElement(By.xpath(".//p"));
             String content = contentElement.getText();
@@ -80,17 +84,22 @@ public class StepDefinitions extends TestBase{
             System.out.println("Content " + (i + 1) + ": " + content);
             System.out.println("-----------------------------------------------------");
             Thread.sleep(5000);
+
         }
+
     }
 
     @Then("Cover images of articles are downloaded")
     public void cover_images_of_articles_are_downloaded() throws IOException, InterruptedException {
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(45));
         List<WebElement> articles = driver.findElements(By.tagName("article"));
-        for(int i = 0; i < 5; i++){
-            driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
-            articles.get(i).findElement(By.xpath(".//h2")).click();
 
-            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
+        for(int i = 0; i < 5; i++){
+            //driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+            wait.until(ExpectedConditions.visibilityOfAllElements(articles));
+            articles.get(i).findElement(By.xpath(".//h2//a")).click();
+
+
             List<WebElement> images = wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(By.xpath("(//article//figure//span//img)[1]")));
             //WebElement image = driver.findElement(By.xpath("(//article//figure//span//img)[1]"));
 
@@ -103,8 +112,26 @@ public class StepDefinitions extends TestBase{
                 SaveImage.saveImage(imageUrl, "images/cover_image_" + i + ".jpg");
             }
             driver.navigate().back();
+            wait.until(ExpectedConditions.urlToBe("https://elpais.com/opinion/"));
+            Assert.assertEquals("https://elpais.com/opinion/", driver.getCurrentUrl());
             //Thread.sleep(5000);
         }
+    }
+
+    @When("each word is translated to English")
+    public void each_word_is_translated_to_english() {
+     StringBuilder s = new StringBuilder();
+        for(String[] array : titleWords){
+            for(String word : array){
+                System.out.print(word + " ");
+                s.append(word);
+            }
+        }
+        System.out.println();
+
+        String translatedText = GoogleTranslate.translateText(s.toString(), "en", "grounded-tine-445717-m6");
+        System.out.println("TRANSLATED TEXT = " + translatedText);
+        System.out.println("=========================================");
     }
     @After
     public void tearDown() throws InterruptedException {
