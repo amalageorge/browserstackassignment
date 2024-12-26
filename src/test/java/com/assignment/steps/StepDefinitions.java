@@ -26,11 +26,14 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import java.io.IOException;
 import java.time.Duration;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class StepDefinitions extends TestBase{
 
     List<String> titleWords = new ArrayList<>();
+    List<String> translatedTitles = new ArrayList<>();
 
  @Before
  public void setUpBrowser() {
@@ -118,7 +121,7 @@ public class StepDefinitions extends TestBase{
         }
     }
 
-    @When("each word is translated to English")
+    @When("each header is translated to English")
     public void each_word_is_translated_to_english() {
      StringBuilder s = new StringBuilder();
      //to print each word of the titles
@@ -127,10 +130,41 @@ public class StepDefinitions extends TestBase{
                 System.out.println("ACTUAL TITLE : " + title + " ");
             //use google translate api to translate Spanish to English
             String translatedText = GoogleTranslate.translateText(title, "en", ConfigReader.getProperty("GOOGLE_TRANSLATE_API_KEY"));
-            System.out.println("TRANSLATED TEXT : " + translatedText);
+            System.out.println("TRANSLATED TITLE : " + translatedText);
             System.out.println("=========================================");
+
+            translatedTitles.add(translatedText);
         }
     }
+
+    @Then("identify any words that are repeated more than twice across all headers combined")
+    public void identify_any_words_that_are_repeated_more_than_twice_across_all_headers_combined() {
+
+        Map<String, Integer> wordCountMap = new HashMap<>();
+
+        for (String title : translatedTitles) {
+            // Split the title into words
+            String[] words = title.toLowerCase().split("\\s+");
+
+            // Update the word count map
+            for (String word : words) {
+                word = word.replaceAll("[^a-zA-Z]", ""); // Remove non-alphabetic characters
+                if (!word.isEmpty()) {
+                    wordCountMap.put(word, wordCountMap.getOrDefault(word, 0) + 1);
+                }
+            }
+        }
+
+        // Print words that occur more than twice
+        System.out.println("Words that appear more than twice:");
+        for (Map.Entry<String, Integer> entry : wordCountMap.entrySet()) {
+            if (entry.getValue() > 2) {
+                System.out.println(entry.getKey() + ": " + entry.getValue());
+            }
+        }
+
+    }
+
     @After
     public void tearDown() throws InterruptedException {
         quitDriver();
