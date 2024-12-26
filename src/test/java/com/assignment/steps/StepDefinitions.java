@@ -30,7 +30,7 @@ import java.util.List;
 
 public class StepDefinitions extends TestBase{
 
-    List<String[]> titleWords = new ArrayList<>();
+    List<String> titleWords = new ArrayList<>();
 
  @Before
  public void setUpBrowser() {
@@ -73,8 +73,7 @@ public class StepDefinitions extends TestBase{
 
             WebElement titleElement = articles.get(i).findElement(By.xpath(".//h2"));
             String title = titleElement.getText();
-            String[] titleString = title.split(" ");
-            titleWords.add(titleString);
+            titleWords.add(title);
 
             WebElement contentElement = articles.get(i).findElement(By.xpath(".//p"));
             String content = contentElement.getText();
@@ -123,18 +122,14 @@ public class StepDefinitions extends TestBase{
     public void each_word_is_translated_to_english() {
      StringBuilder s = new StringBuilder();
      //to print each word of the titles
-        for(String[] array : titleWords){
-            for(String word : array){
-                System.out.print(word + " ");
-                s.append(word);
-            }
+        for(String title : titleWords){
+            //for(String word : array){
+                System.out.println("ACTUAL TITLE : " + title + " ");
+            //use google translate api to translate Spanish to English
+            String translatedText = GoogleTranslate.translateText(title, "en", ConfigReader.getProperty("GOOGLE_TRANSLATE_API_KEY"));
+            System.out.println("TRANSLATED TEXT : " + translatedText);
+            System.out.println("=========================================");
         }
-        System.out.println();
-
-        //use google translate api to translate Spanish to English
-        String translatedText = GoogleTranslate.translateText(s.toString(), "en", ConfigReader.getProperty("GOOGLE_TRANSLATE_API_KEY"));
-        System.out.println("TRANSLATED TEXT = " + translatedText);
-        System.out.println("=========================================");
     }
     @After
     public void tearDown() throws InterruptedException {
