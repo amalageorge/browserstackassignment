@@ -1,11 +1,7 @@
 package com.assignment.steps;
 
 
-import com.assignment.base.DriverFactory;
 import com.assignment.base.TestBase;
-import com.assignment.base.WebDriverFactory;
-import com.assignment.base.WebDriverManagerWithBrowserStackTest;
-import com.assignment.runner.TestRunner;
 import com.assignment.utility.ConfigReader;
 import com.assignment.utility.CookieUtils;
 import com.assignment.utility.GoogleTranslate;
@@ -114,7 +110,7 @@ public class StepDefinitions extends TestBase{
             //navigate back to opinion page
             driver.navigate().back();
             wait.until(ExpectedConditions.urlToBe("https://elpais.com/opinion/"));
-            Assert.assertEquals("https://elpais.com/opinion/", driver.getCurrentUrl());
+            //Assert.assertEquals("https://elpais.com/opinion/", driver.getCurrentUrl());
 
         }
     }

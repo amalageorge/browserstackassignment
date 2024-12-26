@@ -24,6 +24,6 @@ public class TestBase {
     }
     public void loadUrl(String url) {
         driver.get(url);
-        System.out.println(driver.getCurrentUrl());
+        //System.out.println(driver.getCurrentUrl());
     }
 }

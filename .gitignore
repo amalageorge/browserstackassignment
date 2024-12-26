@@ -32,6 +32,7 @@ images/
 # BrowserStack
 *.browserstack
 performance-report.csv
+browserstack.err
 
 # System files
 .DS_Store

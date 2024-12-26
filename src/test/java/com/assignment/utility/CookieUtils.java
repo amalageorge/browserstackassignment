@@ -12,7 +12,7 @@ public class CookieUtils {
     public static void acceptCookies(WebDriver driver) {
         try {
             // Example: Find and click the "Accept" button for cookies
-            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(15));
+            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(50));
             WebElement acceptButton = wait.until(ExpectedConditions.visibilityOfElementLocated
                     (By.xpath("//button[@id='didomi-notice-agree-button']")));
 

@@ -18,6 +18,7 @@ public class DriverFactory {
 
         switch (browser.toLowerCase()) {
             case "chrome":
+                //WebDriverManager.chromedriver().setup();
                 System.setProperty("webdriver.chrome.driver", ConfigReader.getProperty("CHROME_DRIVER_PATH"));
                 // Automatically downloads and sets up the ChromeDriver
                 //WebDriverManager.chromedriver().setup();
@@ -32,11 +33,6 @@ public class DriverFactory {
 
             default:
                 throw new IllegalArgumentException("Unsupported browser type: " + browser);
-        }
-
-        // Optional: Maximize the browser window
-        if (driver != null) {
-            driver.manage().window().maximize();
         }
 
         return driver;
