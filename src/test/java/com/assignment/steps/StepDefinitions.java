@@ -91,17 +91,16 @@ public class StepDefinitions extends TestBase{
 
     @Then("Cover images of articles are downloaded")
     public void cover_images_of_articles_are_downloaded() throws IOException, InterruptedException {
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(45));
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(55));
         List<WebElement> articles = driver.findElements(By.tagName("article"));
 
         for(int i = 0; i < 5; i++){
-            //driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+
             wait.until(ExpectedConditions.visibilityOfAllElements(articles));
             articles.get(i).findElement(By.xpath(".//h2//a")).click();
 
 
             List<WebElement> images = wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(By.xpath("(//article//figure//span//img)[1]")));
-            //WebElement image = driver.findElement(By.xpath("(//article//figure//span//img)[1]"));
 
             if(images.get(0).isDisplayed()) {
 
@@ -111,16 +110,19 @@ public class StepDefinitions extends TestBase{
                 // Download and save the image
                 SaveImage.saveImage(imageUrl, "images/cover_image_" + i + ".jpg");
             }
+
+            //navigate back to opinion page
             driver.navigate().back();
             wait.until(ExpectedConditions.urlToBe("https://elpais.com/opinion/"));
             Assert.assertEquals("https://elpais.com/opinion/", driver.getCurrentUrl());
-            //Thread.sleep(5000);
+
         }
     }
 
     @When("each word is translated to English")
     public void each_word_is_translated_to_english() {
      StringBuilder s = new StringBuilder();
+     //to print each word of the titles
         for(String[] array : titleWords){
             for(String word : array){
                 System.out.print(word + " ");
@@ -129,7 +131,8 @@ public class StepDefinitions extends TestBase{
         }
         System.out.println();
 
-        String translatedText = GoogleTranslate.translateText(s.toString(), "en", "grounded-tine-445717-m6");
+        //use google translate api to translate Spanish to English
+        String translatedText = GoogleTranslate.translateText(s.toString(), "en", ConfigReader.getProperty("GOOGLE_TRANSLATE_API_KEY"));
         System.out.println("TRANSLATED TEXT = " + translatedText);
         System.out.println("=========================================");
     }

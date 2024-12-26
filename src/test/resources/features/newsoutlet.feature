@@ -6,4 +6,4 @@ Feature: Load the news outlet page and ensure that the text is displayed in span
      And Navigate to Opinion
      When First five articles are fetched and their titles and contents are printed
      Then Cover images of articles are downloaded
-     #When each word is translated to English
+     When each word is translated to English
