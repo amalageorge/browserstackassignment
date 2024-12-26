@@ -96,11 +96,12 @@ public class StepDefinitions extends TestBase{
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(55));
         List<WebElement> articles = driver.findElements(By.tagName("article"));
 
+        boolean found = false;
+
         for(int i = 0; i < 5; i++){
 
-            wait.until(ExpectedConditions.visibilityOfAllElements(articles));
-            articles.get(i).findElement(By.xpath(".//h2//a")).click();
-
+            wait.until(ExpectedConditions.elementToBeClickable(By.xpath("(//article//h2//a)[" + (i +1) + "]")));
+            driver.findElement(By.xpath("(//article//h2//a)[" + (i +1) + "]")).click();
 
             List<WebElement> images = wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(By.xpath("(//article//figure//span//img)[1]")));
 
