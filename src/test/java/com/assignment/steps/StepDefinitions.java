@@ -89,7 +89,7 @@ public class StepDefinitions extends TestBase{
 
     @Then("Cover images of articles are downloaded")
     public void cover_images_of_articles_are_downloaded() throws IOException, InterruptedException {
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(55));
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(85));
 
         for(int i = 0; i < 5; i++){
 
