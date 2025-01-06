@@ -3,8 +3,8 @@
 # =============================
 # Add your BrowserStack userName and accessKey here or set BROWSERSTACK_USERNAME and
 # BROWSERSTACK_ACCESS_KEY as env variables
-userName: nikhilthomas_VEQbcN
-accessKey: 2rcZp3A1Syy1EzYTtooE
+userName: <BROWSERSTACK USERNAME>
+accessKey: <BROWSERSTACK ACCESSKEY>
 
 # ======================
 # BrowserStack Reporting
@@ -39,14 +39,14 @@ platforms:
     osVersion: 10
     browserName: Chrome
     browserVersion: latest
-#  - os: OS X
-#    osVersion: Monterey
-#    browserName: Safari
-#    browserVersion: 15.6
-#  - os: OS X
-#    osVersion: Sequoia
-#    browserName: Edge
-#    browserVersion: latest
+  - os: OS X
+    osVersion: Monterey
+    browserName: Safari
+    browserVersion: 15.6
+  - os: OS X
+    osVersion: Sequoia
+    browserName: Edge
+    browserVersion: latest
 
 # =======================
 # Parallels per Platform

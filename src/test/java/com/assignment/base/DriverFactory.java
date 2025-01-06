@@ -1,10 +1,12 @@
 package com.assignment.base;
 
 import com.assignment.utility.ConfigReader;
-import io.github.bonigarcia.wdm.WebDriverManager;
+
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import io.github.bonigarcia.wdm.WebDriverManager;
+
 
 public class DriverFactory {
 
@@ -18,12 +20,9 @@ public class DriverFactory {
 
         switch (browser.toLowerCase()) {
             case "chrome":
-                //WebDriverManager.chromedriver().setup();
-                System.setProperty("webdriver.chrome.driver", ConfigReader.getProperty("CHROME_DRIVER_PATH"));
                 // Automatically downloads and sets up the ChromeDriver
-                //WebDriverManager.chromedriver().setup();
-                driver = new ChromeDriver();
-                break;
+                /*WebDriverManager.chromedriver().setup();
+                driver = new ChromeDriver();*/
 
             case "firefox":
                 // Automatically downloads and sets up the FirefoxDriver
