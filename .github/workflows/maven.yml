@@ -38,9 +38,9 @@ jobs:
       run:
           echo "Google Translate API Key is set"
     - name: Install dependencies and run tests
-      run: ./mvnw clean install
+      run: mvn clean install
     - name: Run maven test
-      run: ./mvnw test
+      run: mvn test
     
 
     # Optional: Uploads the full dependency graph to GitHub to improve the quality of Dependabot alerts this repository can receive
