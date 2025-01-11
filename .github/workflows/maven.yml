@@ -36,7 +36,6 @@ jobs:
           API_KEY: ${{ secrets.GOOGLE_TRANSLATE_API_KEY }}
       run: |
           echo "API Key is set"
-          echo "Connecting to the database..."
     - name: Install dependencies and run tests
       run: 
           ./mvnw clean install # Adjust if using Gradle or another build tool
