@@ -27,19 +27,19 @@ jobs:
         java-version: '17'
         distribution: 'temurin'
         cache: maven
-    - name: Set up environment variables
+    - name: Set up BrowserStack username and accesskey
       env:
-          MY_API_KEY: ${{ secrets.BROWSERSTACK_USERNAME }}
-          DB_PASSWORD: ${{ secrets.BROWSERSTACK_ACCESSKEY }}
+          BROWSERSTACK_USERNAME: ${{ secrets.BROWSERSTACK_USERNAME }}
+          BROWSERSTACK_ACCESSKEY: ${{ secrets.BROWSERSTACK_ACCESSKEY }}
     - name: Run tests with secrets
       env:
-          API_KEY: ${{ secrets.GOOGLE_TRANSLATE_API_KEY }}
+          GOOGLE_TRANSLATE_API_KEY: ${{ secrets.GOOGLE_TRANSLATE_API_KEY }}
       run:
-          echo "API Key is set"
+          echo "Google Translate API Key is set"
     - name: Install dependencies and run tests
-      run: 
-          ./mvnw clean install # Adjust if using Gradle or another build tool
-          ./mvnw test
+      run: ./mvnw clean install
+    - name: Run maven test
+      run: ./mvnw test
     
 
     # Optional: Uploads the full dependency graph to GitHub to improve the quality of Dependabot alerts this repository can receive
